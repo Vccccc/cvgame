@@ -3,28 +3,27 @@
 #include "common.h"
 #include <memory>
 
-
-using std::shared_ptr;
-
 template<typename T>
 class Singleton : public noncopyable
 {
 public:
-    shared_ptr<T> Instance()
+    T* Instance(T* instance = nullptr)
     {
-        if(instance_ == nullptr)
+        if(instance)
         {
-            Create();
+            if(instance_)
+            {
+                delete instance_;
+            }
+            instance_ = instance;
         }
         return instance_;
     }
-
-    void Create()
-    {
-        instance_.reset(new T);
-    }
 private:
     Singleton() {}
-    
-    static shared_ptr<T> instance_;
-}
+    ~Singleton() {}
+    static T* instance_;
+};
+
+template <typename T>
+T *Singleton<T>::instance_ = nullptr;

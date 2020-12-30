@@ -23,9 +23,20 @@ private:
     SkillFactory() {}
 public:
     void registor(const ESkillType &skillType, const SkillBasePtr& skill);
-    SkillBasePtr getSkill(const ESkillType &skillType);
+    SkillBasePtr getSkill(const ESkillType &skillType)
+    {
+        if(skills_.count(skillType))
+        {
+            return skills_[skillType];
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
 
 
 private:
     unordered_map<ESkillType, SkillBasePtr> skills_;
 };
+
